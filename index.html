@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard Akaun DELIMA Murid</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f4f6fb;--card:#fff;--text:#1b2433;--muted:#6a7487;--line:#e2e6ef;--accent:#1b4cc0;--accent-bg:#e6edfb;--hl:#ffe8a3}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#12161f;--card:#1c2230;--text:#e8ecf4;--muted:#98a2b5;--line:#2c3446;--accent:#7ea1ff;--accent-bg:#26314f;--hl:#5c4d12}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#12161f;--card:#1c2230;--text:#e8ecf4;--muted:#98a2b5;--line:#2c3446;--accent:#7ea1ff;--accent-bg:#26314f;--hl:#5c4d12}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:linear-gradient(160deg,#08235c 0%,#123a8f 55%,#1b4cc0 100%) fixed;color:var(--text);min-height:100vh;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
+main{max-width:640px;margin:0 auto;padding:24px 16px 40px}
+h1{font-size:1.9rem;margin:10px 0 2px;color:#fff;letter-spacing:.01em}
+h1 b{color:#f5b800}
+.sub{color:rgba(255,255,255,.82);margin:0 0 20px;font-size:.95rem}
+.badge{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:.68rem;letter-spacing:.09em;padding:4px 10px;border-radius:999px}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 92% 0%,rgba(245,184,0,.30),transparent 42%),radial-gradient(circle at 0% 100%,rgba(200,16,46,.34),transparent 48%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='none' stroke='white' stroke-opacity='.12'%3E%3Cpath d='M20 30L80 60L140 25M80 60L70 130L135 120M20 30L25 110L70 130'/%3E%3C/g%3E%3Cg fill='white' fill-opacity='.22'%3E%3Ccircle cx='20' cy='30' r='3'/%3E%3Ccircle cx='80' cy='60' r='4'/%3E%3Ccircle cx='140' cy='25' r='3'/%3E%3Ccircle cx='70' cy='130' r='4'/%3E%3Ccircle cx='135' cy='120' r='3'/%3E%3Ccircle cx='25' cy='110' r='3'/%3E%3C/g%3E%3C/svg%3E")}
+.box{position:relative}
+input{width:100%;font:inherit;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);outline:none}
+input:focus{border-color:#f5b800;box-shadow:0 0 0 3px rgba(245,184,0,.3)}
+.list{margin:8px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--line);border-radius:12px;max-height:320px;overflow-y:auto}
+.list li{padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line)}
+.list li:last-child{border-bottom:0}
+.list li.on,.list li:hover{background:var(--accent-bg)}
+.list small{display:block;color:var(--muted)}
+mark{background:var(--hl);color:inherit;border-radius:3px;padding:0 1px}
+.count{color:rgba(255,255,255,.85);font-size:.85rem;margin:8px 2px 0}
+.card{margin-top:20px;box-shadow:0 10px 30px rgba(0,0,0,.28);border-top:4px solid #f5b800!important;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 18px}
+.row{padding:12px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}
+.row:last-child{border-bottom:0}
+.lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.val{font-size:1.02rem;word-break:break-all}
+.pw{font-family:ui-monospace,Menlo,Consolas,monospace}
+.btns{display:flex;gap:6px;flex-shrink:0}
+button{font:inherit;font-size:.82rem;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--accent);cursor:pointer}
+button:hover{background:var(--accent-bg)}
+.empty{color:var(--muted);text-align:center;padding:18px 0}
+.row.tfa{display:block;background:var(--accent-bg);margin:6px -18px -6px;padding:16px 18px;border-radius:0 0 10px 10px;border-bottom:0}
+.tfa h2{font-size:1rem;margin:0 0 6px}
+.tfa p,.tfa li{font-size:.9rem;margin:0 0 6px}
+.tfa ol{margin:6px 0 10px;padding-left:20px}
+.tfa a.go{display:inline-block;background:#f5b800;color:#1b2433;font-weight:600;text-decoration:none;padding:9px 14px;border-radius:9px;margin-right:6px}
+.tfa .note{color:var(--muted);font-size:.82rem;margin-top:10px}
+.tfa .url{word-break:break-all;font-size:.8rem}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+<span class="badge">KEMENTERIAN PENDIDIKAN MALAYSIA</span>
+<h1>DELIMa <b>3.0</b></h1>
+<p class="sub">Taip beberapa huruf nama murid, kemudian pilih nama yang tepat daripada senarai.</p>
+<div class="box">
+<input id="q" type="search" placeholder="Contoh: MUHAMMAD AISY…" autocomplete="off" autofocus>
+<ul class="list" id="list" hidden></ul>
+<div class="count" id="count"></div>
+</div>
+<section class="card" id="card" hidden>
+<div class="row"><div><div class="lbl">Nama penuh</div><div class="val" id="vn"></div></div><div class="btns"><button data-c="vn">Salin</button></div></div>
+<div class="row"><div><div class="lbl">Kelas</div><div class="val" id="vk"></div></div></div>
+<div class="row"><div><div class="lbl">Email (ID DELIMA)</div><div class="val" id="ve"></div></div><div class="btns"><button data-c="ve">Salin</button></div></div>
+<div class="row"><div><div class="lbl">Password</div><div class="val pw" id="vp"></div></div><div class="btns"><button id="tg">Tunjuk</button><button data-c="vp">Salin</button></div></div>
+<div class="row tfa"><div>
+<h2>🔐 Aktifkan Pengesahan 2 Langkah (2SV)</h2>
+<p>Tambah satu lapisan keselamatan supaya akaun ini tidak mudah dimasuki orang lain walaupun password diketahui.</p>
+<ol>
+<li>Log masuk ke akaun di atas, kemudian buka pautan di bawah.</li>
+<li>Tekan <b>Get started</b> dan masukkan semula password jika diminta.</li>
+<li>Pilih kaedah kedua: nombor telefon (SMS), aplikasi Google atau Authenticator.</li>
+<li>Tekan <b>Turn on</b>, dan simpan <b>Backup codes</b> di tempat selamat.</li>
+</ol>
+<a class="go" href="https://myaccount.google.com/signinoptions/twosv" target="_blank" rel="noopener noreferrer">Buka tetapan 2SV</a><button data-c="vu">Salin pautan</button>
+<div class="url" id="vu">https://myaccount.google.com/signinoptions/twosv</div>
+<p class="note">Nota: pihak sekolah atau pentadbir DELIMa boleh menyekat 2SV untuk akaun murid. Jika pilihan ini tidak muncul atau tidak boleh dihidupkan, rujuk Penyelaras ICT sekolah. Gunakan nombor telefon ibu bapa atau penjaga jika murid tiada telefon sendiri.</p>
+</div></div>
+</section>
+</main>
+<script>
+var DOM="@moe-dl.edu.my",PASS="Tba0078Skai#";
+var D={"1 KELISA":[["AHMAD NAIM ZIKRI BIN KAMARUL ZAMAN","ahmadnaimzikri.kamarulzaman"],["ARISSA HUMAIRA BINTI MOHD NURULHISAM","arissahumaira.mohdnurulhisam"],["DANIA ZULAIKHA BINTI MOHD ZULFAIZ","daniazulaikha.mohdzulfaiz"],["HASAN AS SYUKRI BIN ZAKARIA","hasanassyukri.zakaria"],["MOHAMAD ARSHAD AUS BIN MOHAMAD NUAIM","mohamadarshadaus.mohamadnuaim"],["MOHAMAD AYDEAL RAFFIEQI BIN MOHD SUKRI","m-231103008443"],["MUHAMAD AMMAR DANISH BIN SABRI","m-241102215731"],["MUHAMAD AMMAR HAFIZH BIN MUHAMAD AZIZAN","m-241102215735"],["MUHAMMAD AKIF ZULFAN BIN AHMAD ISMADI","m-241102215739"],["MUHAMMAD DARWISH IKHWAN BIN MOHD ZAILANI","muhammaddarwishikhwan.mohdzailani"],["MUHAMMAD FAIQ NAFIS BIN MUHAMMAD FIKRI","m-241102215742"],["MUHAMMAD FAIZ BIN MOHD EBBY SAIFULLAH","muhammadfaiz.mohdebbysaifullah"],["MUHAMMAD FARIS BIN SAZARI","muhammadfaris.sazari"],["MUHAMMAD HAFIZ BIN MOHD AZMI","muhammadhafiz.mohdazmi"],["MUHAMMAD IKRAM BIN YUSRAN","m-231103008444"],["MUHAMMAD NADIY ARAMI BIN MOHD HELMI","m-231103010946"],["MUHAMMAD QARIZH AIMAN BIN MOHD KHALID","m-241102215744"],["MUHAMMAD QHAIM MALIQIE BIN ZULKIFILI AZMAN","m-241102215746"],["MUHAMMAD YUSUF DARWISYH BIN MOHAMAD JOHARI","muhammadyusufdarwisyh.mohamadjohari"],["MUHAMMAD ZIYAD ARRIZQI BIN MOHD ZASZUADI","m-231103010954"],["NUR HAIFA ILYANA BINTI NOOR MOHAMAD","nurhaifailyana.noormohamad"],["NUR NADIA ZAHIRA BINTI RAMZAM","m-251102175909"],["NUR NAURA HUMAIRA BINTI MOHAMAD FARHAN","nurnaurahumaira.mohamadfarhan"],["NUR QALESYA HUMAIRA BINTI ROSLAN","m-251101100610"],["NUR RANIA AULIA BINTI MOHAMMAD FAIZOL","m-241102215752"],["NUR SAFIYYA BINTI MOHD HAFIZEY","nursafiyya.mohdhafizey"],["NUR SYIFAA' MUMTAZU BINTI AHMAD RAHZUWAN","nursyifaamumtazu.ahmadrahzuwan"],["PUTERI NURRAISYA BINTI MUHAMMAD RIDZUAN AIDIL","m-251101128820"],["RANIATUL JANNA NUR HAWRA BINTI MOHD ROSLI","m-241102338023"],["SITI AINA MARISSA BINTI HAIDIR","m-241101350721"],["TUAN PUTRA AIMAN WILDAN BIN TUAN ROSLI","m-241102335432"],["WAN NUR REBECCA FARHANIS BINTI WAN NUR HISHAM","m-241102335435"]],
+"2 KELISA":[["AISY IZZRAIF HANS BIN HASROL AZWAN","m-231103007788"],["ALIESHA AZZAHRA BINTI ALIAS","m-231101011529"],["AQEEF NAQIUDDIN BIN ABDUL ADZIM","m-251102175788"],["AQILAH NAILA BINTI MOHD SABARANI","m-251102175769"],["HARITH DAYYAN BIN MOHD ARIF","m-231103006570"],["HUMAIRA NUR AISYA BINTI MOHD NORHISHAM","m-251102175785"],["KAISYA AS SYIFAA BINTI MUHAMMAD KHAIRUDDIN","m-231103012637"],["MOHAMAD SYAZARUL BIN MOHAMAD SANANG","m-241102215729"],["MUHAMMAD ADAM HABIBULLAH BIN MOHD HAFIZ","m-241102215737"],["MUHAMMAD AMMAR AMSYAR BIN ERMAN NASRI","m-231103014332"],["MUHAMMAD AMSYAR FITRI BIN MOHD FALAS","m-231103007789"],["MUHAMMAD DHAIFULLAH HARRAZ ISLAM BIN DARUSALAM","m-251102175791"],["MUHAMMAD FIRAS RAYYAN BIN MOHD RAHMAT","m-231103012747"],["MUHAMMAD HABIB BIN AZIZI","m-231103005165"],["MUHAMMAD HAFIDH IRFAN BIN MOHD HAFIZEY","m-251102175801"],["MUHAMMAD HAZIQ BIN MOHD RODIN","m-251102175789"],["MUHAMMAD ISMAIL BIN ZAINUDIN","m-231101013927"],["MUHAMMAD LUTH BIN AZMI","m-231101012352"],["MUHAMMAD NADZRIN AIDIL BIN MOHD AIKAL","m-231103006571"],["MUHAMMAD NAZIRUL ATIEF BIN MOHD FADLI","m-230303017831"],["MUHAMMAD SHAHRUL DARWISY BIN SHAH YUSRIZAL","m-231103007790"],["MUHAMMAD SYAHMI BIN ABDULLAH","m-231103005164"],["NOR ALEESYA AMANDA BINTI MOHD ANEYZAM","m-221101060675"],["NUHA NABIHAH BINTI MOHD AUZANI","m-251102175806"],["NUR ALYA RAMADHANIYAH BINTI MUHAMMAD ARIF SYAWAL","m-231103006444"],["NUR AMANDA DANISHA BINTI MOHD NAZRULNIZAM","m-231103015451"],["NUR AULIA SYIFA BINTI MOHD HISHAMUDDIN","m-251102175803"],["NUR AUNI BINTI MOHD ZUHAIRI","m-231103005067"],["NUR DIYANA SAFIYA BINTI MOHD HAZRI","m-251102175792"],["NUR QAIRA QALEESYA BINTI ZAHARI","m-231103006677"],["NUR SYAIDATUL AKILLA BINTI MOHAMAD BADRUN","m-231103006446"],["PUTERA SYAHMIZAM BIN MAILAN @ MOHD MAILAN","m-251102175794"],["PUTERI NUR RANEEA AURELIYA BINTI ABDUL RAHMAN","m-251102175800"],["PUTERI SYAIDATUL UMAIRAH BINTI RAJATUAH ABU BAKAR","m-251102294598"],["SITI HASMIMI BINTI HAIDIR","m-231103004642"],["WAN NUR ARIESYA NAJIHAH BINTI WAN MOHD ISKANDAR","m-231101013742"]],
+"3 EMAS":[["AARON HAFIY BIN MOHD KHAIRUL ADHAM","m-221103001267"],["ADRIANA YASMIN BINTI BADRULHISHAM","m-241103106131"],["KU MUHAMAD AQIL BIN KU HAMIZI","m-211101068449"],["MOHAMAD SYAZWAIZ BIN ZAINUDDIN","m-211101068190"],["MUHAMAD AMIRUDDIN BIN SABRI","m-241103106127"],["MUHAMMAD AISY FAYYADH BIN KHAIRUL AZHAR","m-231103002511"],["MUHAMMAD AISY HAIKAL ZAKWAN BIN MOHD AFFANDI","m-221103000345"],["MUHAMMAD AISY ISKANDAR BIN ABDUL RAZZAQ","m-221103005795"],["MUHAMMAD ALIF BIN SABRI","m-221103000346"],["MUHAMMAD FARISH IRFAN BIN MOHD FAIRUS","m-241103106138"],["MUHAMMAD FARZAN BIN SAZARI","m-241102214527"],["MUHAMMAD ZUL JABBAR BIN MOHD AJAIB @ MOHD AYUB","m-221103004437"],["NUR AINUL MARDHIAH BINTI NORDIN","m-231103001695"],["NUR DAMIA AYRA BINTI MOHD ROZI","m-241103106134"],["NUR DINA BINTI SHAM SURIJAYA","m-221103000302"],["NUR IRIS BASYIRAH BINTI MOHD RIDDZUAN","m-15305560"],["NUR MARIENA BINTI MOHD RAFLI","m-221103005800"],["SITI NUR MAYA AISHAH BINTI MOHD IBRAHIM","m-221101054501"]],
+"3 KELISA":[["ARISSA SOFIA BINTI MOHD NURULHISAM","m-221103001928"],["FARHANA KHALISYA BINTI KHAIROL IZANI","m-221103000496"],["HANY DARINA BINTI RONY CANIAGO","m-221103005799"],["HASAN AL BUKHARI BIN ZAKARIA","m-241102369703"],["MAIRA HUMAIRA AZAHRA BINTI AHMAD KAMALRUL HISAN","m-241103106132"],["MUHAMMAD ADAM BIN SAIFULHISHAM ASHRAHMAN","m-231102030033"],["MUHAMMAD ADAM NAUFAL BIN MUHAMAD TARMIZI","m-231103002512"],["MUHAMMAD AIDIL FAREZ BIN MUHAMMAD FAIZRAN","m-241103106137"],["MUHAMMAD ARIF BIN IBRAHIM","m-220603000801"],["MUHAMMAD ARIF PUTRA BIN MOHD KAMARUZAMAN","m-231103001001"],["MUHAMMAD FARIS FARHAN BIN MOHD AZRA","m-241103106128"],["MUHAMMAD SYAHRUL FARHAN BIN MOHD FAISHAM","m-221103000661"],["MUHAMMAD SYAQIF BIN MOHD SABERI","m-241103106129"]]};
+var S=[];for(var k in D)D[k].forEach(function(r){S.push({n:r[0],k:k,e:r[1]+DOM})});
+S.sort(function(a,b){return a.n<b.n?-1:a.n>b.n?1:0});
+var q=document.getElementById("q"),ul=document.getElementById("list"),cnt=document.getElementById("count"),card=document.getElementById("card"),shown=false,res=[],idx=-1;
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function hl(n,t){var i=n.indexOf(t);return i<0?esc(n):esc(n.slice(0,i))+"<mark>"+esc(t)+"</mark>"+esc(n.slice(i+t.length))}
+function search(){
+var t=q.value.trim().toUpperCase();idx=-1;
+if(!t){ul.hidden=true;cnt.textContent="";return}
+var a=[],b=[];
+S.forEach(function(s){var i=s.n.indexOf(t);if(i===0)a.push(s);else if(i>0)b.push(s)});
+res=a.concat(b);
+ul.hidden=!res.length;
+cnt.textContent=res.length?res.length+" nama dijumpai":"Tiada nama dijumpai. Cuba semak ejaan.";
+ul.innerHTML=res.map(function(s,i){return'<li data-i="'+i+'">'+hl(s.n,t)+"<small>"+esc(s.k)+"</small></li>"}).join("");
+}
+function pick(i){
+var s=res[i];if(!s)return;
+document.getElementById("vn").textContent=s.n;
+document.getElementById("vk").textContent=s.k;
+document.getElementById("ve").textContent=s.e;
+shown=false;pw();card.hidden=false;ul.hidden=true;q.value=s.n;cnt.textContent="";
+}
+function pw(){document.getElementById("vp").textContent=shown?PASS:"•".repeat(PASS.length);document.getElementById("tg").textContent=shown?"Sorok":"Tunjuk"}
+function mark(){var li=ul.children;for(var i=0;i<li.length;i++)li[i].className=i===idx?"on":"";if(li[idx])li[idx].scrollIntoView({block:"nearest"})}
+q.addEventListener("input",function(){card.hidden=true;search()});
+q.addEventListener("keydown",function(e){
+if(e.key==="ArrowDown"&&res.length){e.preventDefault();idx=Math.min(idx+1,res.length-1);mark()}
+else if(e.key==="ArrowUp"&&res.length){e.preventDefault();idx=Math.max(idx-1,0);mark()}
+else if(e.key==="Enter"&&res.length){pick(idx<0?0:idx)}
+});
+ul.addEventListener("click",function(e){var li=e.target.closest("li");if(li)pick(+li.dataset.i)});
+document.getElementById("tg").addEventListener("click",function(){shown=!shown;pw()});
+card.addEventListener("click",function(e){
+var id=e.target.getAttribute&&e.target.getAttribute("data-c");if(!id)return;
+var txt=id==="vp"?PASS:document.getElementById(id).textContent,b=e.target;
+function ok(){var o=b.textContent;b.textContent="Disalin ✓";setTimeout(function(){b.textContent=o},1200)}
+try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(x){fb()}
+function fb(){var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(x){}document.body.removeChild(t)}
+});
+</script>
+</body>
+</html>
