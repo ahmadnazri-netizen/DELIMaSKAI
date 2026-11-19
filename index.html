@@ -50,6 +50,16 @@ button:hover{background:var(--accent-bg)}
 .logo{display:block;margin:0 auto 8px;width:120px;height:auto;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
 .school{color:#fff;font-weight:700;font-size:1.15rem;letter-spacing:.04em;margin-bottom:12px}
 .foot{text-align:center;color:rgba(255,255,255,.8);font-size:.8rem;margin:28px 0 0}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.bar .rf{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);font-weight:600}
+.bar .rf:hover{background:rgba(255,255,255,.26)}
+#rs{color:rgba(255,255,255,.85);font-size:.8rem}
+.panel{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.panel p{margin:0 0 8px;font-size:.86rem}
+.panel .sm{color:var(--muted);font-size:.78rem}
+.panel textarea{width:100%;height:110px;font:inherit;font-size:.8rem;padding:10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);resize:vertical}
+.panel .acts{display:flex;gap:8px;margin-top:8px}
+.panel .pri{background:#f5b800;color:#1b2433;border-color:#f5b800;font-weight:600}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -66,6 +76,14 @@ button:hover{background:var(--accent-bg)}
 <input id="q" type="search" placeholder="Contoh: MUHAMMAD AISY…" autocomplete="off" autofocus>
 <ul class="list" id="list" hidden></ul>
 <div class="count" id="count"></div>
+<div class="bar"><button class="rf" id="rf" type="button">↻ Segarkan data</button><span id="rs"></span></div>
+<div class="panel" id="rp" hidden>
+<p><b>Segarkan data daripada Google Sheet</b></p>
+<p>Buka Google Sheet, tekan <b>Ctrl+A</b> kemudian <b>Ctrl+C</b>, lalu tampal (<b>Ctrl+V</b>) di ruang bawah. Lajur mesti mengikut turutan: KELAS, NAMA MURID, ID DELIMA, PASSWORD.</p>
+<textarea id="rt" placeholder="Tampal data di sini…"></textarea>
+<div class="acts"><button class="pri" id="ra" type="button">Kemas kini</button><button id="rc" type="button">Tutup</button></div>
+<p class="sm" style="margin-top:8px">Halaman ini tidak boleh membaca Google Sheet secara terus. Data yang ditampal hanya digunakan pada paparan ini dan kembali kepada versi asal apabila halaman dibuka semula.</p>
+</div>
 </div>
 <section class="card" id="card" hidden>
 <div class="row"><div><div class="lbl">Nama penuh</div><div class="val" id="vn"></div></div><div class="btns"><button data-c="vn">Salin</button></div></div>
@@ -94,7 +112,7 @@ var D={"1 KELISA":[["AHMAD NAIM ZIKRI BIN KAMARUL ZAMAN","ahmadnaimzikri.kamarul
 "2 KELISA":[["AISY IZZRAIF HANS BIN HASROL AZWAN","m-231103007788"],["ALIESHA AZZAHRA BINTI ALIAS","m-231101011529"],["AQEEF NAQIUDDIN BIN ABDUL ADZIM","m-251102175788"],["AQILAH NAILA BINTI MOHD SABARANI","m-251102175769"],["HARITH DAYYAN BIN MOHD ARIF","m-231103006570"],["HUMAIRA NUR AISYA BINTI MOHD NORHISHAM","m-251102175785"],["KAISYA AS SYIFAA BINTI MUHAMMAD KHAIRUDDIN","m-231103012637"],["MOHAMAD SYAZARUL BIN MOHAMAD SANANG","m-241102215729"],["MUHAMMAD ADAM HABIBULLAH BIN MOHD HAFIZ","m-241102215737"],["MUHAMMAD AMMAR AMSYAR BIN ERMAN NASRI","m-231103014332"],["MUHAMMAD AMSYAR FITRI BIN MOHD FALAS","m-231103007789"],["MUHAMMAD DHAIFULLAH HARRAZ ISLAM BIN DARUSALAM","m-251102175791"],["MUHAMMAD FIRAS RAYYAN BIN MOHD RAHMAT","m-231103012747"],["MUHAMMAD HABIB BIN AZIZI","m-231103005165"],["MUHAMMAD HAFIDH IRFAN BIN MOHD HAFIZEY","m-251102175801"],["MUHAMMAD HAZIQ BIN MOHD RODIN","m-251102175789"],["MUHAMMAD ISMAIL BIN ZAINUDIN","m-231101013927"],["MUHAMMAD LUTH BIN AZMI","m-231101012352"],["MUHAMMAD NADZRIN AIDIL BIN MOHD AIKAL","m-231103006571"],["MUHAMMAD NAZIRUL ATIEF BIN MOHD FADLI","m-230303017831"],["MUHAMMAD SHAHRUL DARWISY BIN SHAH YUSRIZAL","m-231103007790"],["MUHAMMAD SYAHMI BIN ABDULLAH","m-231103005164"],["NOR ALEESYA AMANDA BINTI MOHD ANEYZAM","m-221101060675"],["NUHA NABIHAH BINTI MOHD AUZANI","m-251102175806"],["NUR ALYA RAMADHANIYAH BINTI MUHAMMAD ARIF SYAWAL","m-231103006444"],["NUR AMANDA DANISHA BINTI MOHD NAZRULNIZAM","m-231103015451"],["NUR AULIA SYIFA BINTI MOHD HISHAMUDDIN","m-251102175803"],["NUR AUNI BINTI MOHD ZUHAIRI","m-231103005067"],["NUR DIYANA SAFIYA BINTI MOHD HAZRI","m-251102175792"],["NUR QAIRA QALEESYA BINTI ZAHARI","m-231103006677"],["NUR SYAIDATUL AKILLA BINTI MOHAMAD BADRUN","m-231103006446"],["PUTERA SYAHMIZAM BIN MAILAN @ MOHD MAILAN","m-251102175794"],["PUTERI NUR RANEEA AURELIYA BINTI ABDUL RAHMAN","m-251102175800"],["PUTERI SYAIDATUL UMAIRAH BINTI RAJATUAH ABU BAKAR","m-251102294598"],["SITI HASMIMI BINTI HAIDIR","m-231103004642"],["WAN NUR ARIESYA NAJIHAH BINTI WAN MOHD ISKANDAR","m-231101013742"]],
 "3 EMAS":[["AARON HAFIY BIN MOHD KHAIRUL ADHAM","m-221103001267"],["ADRIANA YASMIN BINTI BADRULHISHAM","m-241103106131"],["KU MUHAMAD AQIL BIN KU HAMIZI","m-211101068449"],["MOHAMAD SYAZWAIZ BIN ZAINUDDIN","m-211101068190"],["MUHAMAD AMIRUDDIN BIN SABRI","m-241103106127"],["MUHAMMAD AISY FAYYADH BIN KHAIRUL AZHAR","m-231103002511"],["MUHAMMAD AISY HAIKAL ZAKWAN BIN MOHD AFFANDI","m-221103000345"],["MUHAMMAD AISY ISKANDAR BIN ABDUL RAZZAQ","m-221103005795"],["MUHAMMAD ALIF BIN SABRI","m-221103000346"],["MUHAMMAD FARISH IRFAN BIN MOHD FAIRUS","m-241103106138"],["MUHAMMAD FARZAN BIN SAZARI","m-241102214527"],["MUHAMMAD ZUL JABBAR BIN MOHD AJAIB @ MOHD AYUB","m-221103004437"],["NUR AINUL MARDHIAH BINTI NORDIN","m-231103001695"],["NUR DAMIA AYRA BINTI MOHD ROZI","m-241103106134"],["NUR DINA BINTI SHAM SURIJAYA","m-221103000302"],["NUR IRIS BASYIRAH BINTI MOHD RIDDZUAN","m-15305560"],["NUR MARIENA BINTI MOHD RAFLI","m-221103005800"],["SITI NUR MAYA AISHAH BINTI MOHD IBRAHIM","m-221101054501"]],
 "3 KELISA":[["ARISSA SOFIA BINTI MOHD NURULHISAM","m-221103001928"],["FARHANA KHALISYA BINTI KHAIROL IZANI","m-221103000496"],["HANY DARINA BINTI RONY CANIAGO","m-221103005799"],["HASAN AL BUKHARI BIN ZAKARIA","m-241102369703"],["MAIRA HUMAIRA AZAHRA BINTI AHMAD KAMALRUL HISAN","m-241103106132"],["MUHAMMAD ADAM BIN SAIFULHISHAM ASHRAHMAN","m-231102030033"],["MUHAMMAD ADAM NAUFAL BIN MUHAMAD TARMIZI","m-231103002512"],["MUHAMMAD AIDIL FAREZ BIN MUHAMMAD FAIZRAN","m-241103106137"],["MUHAMMAD ARIF BIN IBRAHIM","m-220603000801"],["MUHAMMAD ARIF PUTRA BIN MOHD KAMARUZAMAN","m-231103001001"],["MUHAMMAD FARIS FARHAN BIN MOHD AZRA","m-241103106128"],["MUHAMMAD SYAHRUL FARHAN BIN MOHD FAISHAM","m-221103000661"],["MUHAMMAD SYAQIF BIN MOHD SABERI","m-241103106129"]]};
-var S=[];for(var k in D)D[k].forEach(function(r){S.push({n:r[0],k:k,e:r[1]+DOM})});
+var cur=PASS,S=[];for(var k in D)D[k].forEach(function(r){S.push({n:r[0],k:k,e:r[1]+DOM,p:PASS})});
 S.sort(function(a,b){return a.n<b.n?-1:a.n>b.n?1:0});
 var q=document.getElementById("q"),ul=document.getElementById("list"),cnt=document.getElementById("count"),card=document.getElementById("card"),shown=false,res=[],idx=-1;
 function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
@@ -114,9 +132,9 @@ var s=res[i];if(!s)return;
 document.getElementById("vn").textContent=s.n;
 document.getElementById("vk").textContent=s.k;
 document.getElementById("ve").textContent=s.e;
-shown=false;pw();card.hidden=false;ul.hidden=true;q.value=s.n;cnt.textContent="";
+cur=s.p||PASS;shown=false;pw();card.hidden=false;ul.hidden=true;q.value=s.n;cnt.textContent="";
 }
-function pw(){document.getElementById("vp").textContent=shown?PASS:"•".repeat(PASS.length);document.getElementById("tg").textContent=shown?"Sorok":"Tunjuk"}
+function pw(){document.getElementById("vp").textContent=shown?cur:"•".repeat(cur.length);document.getElementById("tg").textContent=shown?"Sorok":"Tunjuk"}
 function mark(){var li=ul.children;for(var i=0;i<li.length;i++)li[i].className=i===idx?"on":"";if(li[idx])li[idx].scrollIntoView({block:"nearest"})}
 q.addEventListener("input",function(){card.hidden=true;search()});
 q.addEventListener("keydown",function(e){
@@ -128,10 +146,24 @@ ul.addEventListener("click",function(e){var li=e.target.closest("li");if(li)pick
 document.getElementById("tg").addEventListener("click",function(){shown=!shown;pw()});
 card.addEventListener("click",function(e){
 var id=e.target.getAttribute&&e.target.getAttribute("data-c");if(!id)return;
-var txt=id==="vp"?PASS:document.getElementById(id).textContent,b=e.target;
+var txt=id==="vp"?cur:document.getElementById(id).textContent,b=e.target;
 function ok(){var o=b.textContent;b.textContent="Disalin ✓";setTimeout(function(){b.textContent=o},1200)}
 try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(x){fb()}
 function fb(){var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(x){}document.body.removeChild(t)}
+});
+var rp=document.getElementById("rp"),rt=document.getElementById("rt"),rs=document.getElementById("rs");
+document.getElementById("rf").addEventListener("click",function(){rp.hidden=!rp.hidden;if(!rp.hidden)rt.focus()});
+document.getElementById("rc").addEventListener("click",function(){rp.hidden=true});
+document.getElementById("ra").addEventListener("click",function(){
+var out=[];rt.value.split(/\r?\n/).forEach(function(l){
+var c=l.split("\t").map(function(x){return x.trim()});
+if(c.length<3||!c[1]||/^KELAS$/i.test(c[0]))return;
+var e=c[2];if(e&&e.indexOf("@")<0)e+=DOM;
+out.push({k:c[0].toUpperCase(),n:c[1].toUpperCase(),e:e,p:c[3]||PASS})});
+if(!out.length){rs.textContent="Tiada data sah. Pastikan semua lajur disalin.";return}
+out.sort(function(a,b){return a.n<b.n?-1:a.n>b.n?1:0});
+S=out;res=[];card.hidden=true;q.value="";search();rt.value="";rp.hidden=true;
+rs.textContent="Data dikemas kini: "+out.length+" murid ("+new Date().toLocaleTimeString("ms-MY",{hour:"2-digit",minute:"2-digit"})+")";
 });
 </script>
 </body>
