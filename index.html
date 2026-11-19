@@ -77,13 +77,6 @@ button:hover{background:var(--accent-bg)}
 <ul class="list" id="list" hidden></ul>
 <div class="count" id="count"></div>
 <div class="bar"><button class="rf" id="rf" type="button">↻ Segarkan data</button><span id="rs"></span></div>
-<div class="panel" id="rp" hidden>
-<p><b>Segarkan data daripada Google Sheet</b></p>
-<p>Buka Google Sheet, tekan <b>Ctrl+A</b> kemudian <b>Ctrl+C</b>, lalu tampal (<b>Ctrl+V</b>) di ruang bawah. Lajur mesti mengikut turutan: KELAS, NAMA MURID, ID DELIMA, PASSWORD.</p>
-<textarea id="rt" placeholder="Tampal data di sini…"></textarea>
-<div class="acts"><button class="pri" id="ra" type="button">Kemas kini</button><button id="rc" type="button">Tutup</button></div>
-<p class="sm" style="margin-top:8px">Halaman ini tidak boleh membaca Google Sheet secara terus. Data yang ditampal hanya digunakan pada paparan ini dan kembali kepada versi asal apabila halaman dibuka semula.</p>
-</div>
 </div>
 <section class="card" id="card" hidden>
 <div class="row"><div><div class="lbl">Nama penuh</div><div class="val" id="vn"></div></div><div class="btns"><button data-c="vn">Salin</button></div></div>
@@ -151,20 +144,34 @@ function ok(){var o=b.textContent;b.textContent="Disalin ✓";setTimeout(functio
 try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(x){fb()}
 function fb(){var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(x){}document.body.removeChild(t)}
 });
-var rp=document.getElementById("rp"),rt=document.getElementById("rt"),rs=document.getElementById("rs");
-document.getElementById("rf").addEventListener("click",function(){rp.hidden=!rp.hidden;if(!rp.hidden)rt.focus()});
-document.getElementById("rc").addEventListener("click",function(){rp.hidden=true});
-document.getElementById("ra").addEventListener("click",function(){
-var out=[];rt.value.split(/\r?\n/).forEach(function(l){
-var c=l.split("\t").map(function(x){return x.trim()});
+var SID="1vYkuValCdY6FkeA_vXdYHGNsSMR8HRbGCYITERZzhhA",rs=document.getElementById("rs"),rf=document.getElementById("rf"),busy=false;
+function csv(t){var r=[],row=[],f="",q=false,i,c;
+for(i=0;i<t.length;i++){c=t[i];
+if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+else if(c==='"')q=true;
+else if(c===","){row.push(f);f=""}
+else if(c==="\n"){row.push(f);r.push(row);row=[];f=""}
+else if(c!=="\r")f+=c}
+if(f||row.length){row.push(f);r.push(row)}return r}
+function load(t){var out=[];csv(t).forEach(function(c){
+c=c.map(function(x){return x.trim()});
 if(c.length<3||!c[1]||/^KELAS$/i.test(c[0]))return;
 var e=c[2];if(e&&e.indexOf("@")<0)e+=DOM;
 out.push({k:c[0].toUpperCase(),n:c[1].toUpperCase(),e:e,p:c[3]||PASS})});
-if(!out.length){rs.textContent="Tiada data sah. Pastikan semua lajur disalin.";return}
+if(!out.length)throw new Error("kosong");
 out.sort(function(a,b){return a.n<b.n?-1:a.n>b.n?1:0});
-S=out;res=[];card.hidden=true;q.value="";search();rt.value="";rp.hidden=true;
-rs.textContent="Data dikemas kini: "+out.length+" murid ("+new Date().toLocaleTimeString("ms-MY",{hour:"2-digit",minute:"2-digit"})+")";
-});
+S=out;return out.length}
+function refresh(manual){
+if(busy)return;busy=true;rf.disabled=true;rf.textContent="\u21bb Memuatkan\u2026";
+var u="https://docs.google.com/spreadsheets/d/"+SID+"/gviz/tq?tqx=out:csv&sheet=Sheet1";
+fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(r.status);return r.text()}).then(function(t){
+var n=load(t);card.hidden=true;res=[];search();
+rs.textContent="Data dikemas kini: "+n+" murid ("+new Date().toLocaleTimeString("ms-MY",{hour:"2-digit",minute:"2-digit"})+")"
+}).catch(function(){
+if(manual)rs.textContent="Tidak dapat capai Google Sheet. Paparan ini mungkin menyekat sambungan luar, atau Sheet tidak dikongsi untuk dilihat."
+}).then(function(){busy=false;rf.disabled=false;rf.textContent="\u21bb Segarkan data"})}
+rf.addEventListener("click",function(){refresh(true)});
+refresh(false);
 </script>
 </body>
 </html>
